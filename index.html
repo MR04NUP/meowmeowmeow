@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Offshore</title>
+<title>Kora</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
@@ -31,6 +31,25 @@ body{
   z-index:99;
   flex-direction:column;
 }
+
+.start-button{
+  padding:1.5rem 3rem;
+  font-size:1.2rem;
+  font-weight:700;
+  background:#000;
+  color:#fff;
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  box-shadow:0 4px 20px rgba(0,0,0,0.1);
+}
+
+.start-button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 25px rgba(0,0,0,0.15);
+}
+
 .loader .circle{
   width:140px;
   height:140px;
@@ -41,22 +60,74 @@ body{
   justify-content:center;
   box-shadow:0 0 0 10px rgba(0,0,0,.05);
   position:relative;
+  transition:all 0.8s ease;
 }
+
+.loader .circle.morphing{
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+}
+
 .loader .percentage{
   position:absolute;
   font-weight:700;
   font-size:2rem;
   color:#000;
+  opacity:1;
+  transition:opacity 0.5s ease;
 }
+
+.loader .percentage.fade-out{
+  opacity:0;
+}
+
 .loader svg{
   transform:rotate(-90deg);
+  transition:all 0.8s ease;
 }
+
+.loader svg.morphing{
+  transform:rotate(0deg);
+}
+
 .loader svg circle{
   fill:none;
   stroke-width:8;
   stroke:#000;
   stroke-dasharray:440;
   stroke-dashoffset:440;
+  transition:all 0.8s ease;
+}
+
+.loader svg circle.morphing{
+  fill:#fff;
+  stroke:#fff;
+  stroke-width:0;
+  stroke-dasharray:0;
+  stroke-dashoffset:0;
+}
+
+/* Kora Logo */
+.kora-logo{
+  position:absolute;
+  width:140px;
+  height:140px;
+  opacity:0;
+  transition:opacity 0.5s ease;
+}
+
+.kora-logo.visible{
+  opacity:1;
+}
+
+.kora-logo svg{
+  width:100%;
+  height:100%;
+}
+
+.kora-logo path{
+  fill:#fff;
 }
 /* ---- Hero background ---- */
 .hero{
@@ -196,11 +267,17 @@ body{
 <body>
 <!-- Loader -->
 <div class="loader" id="loader">
-  <div class="circle">
-     <svg width="140" height="140">
-       <circle cx="70" cy="70" r="70"></circle>
+  <button class="start-button" id="startButton">Experience Bliss</button>
+  <div class="circle" id="loadingCircle">
+     <svg width="140" height="140" id="loadingSvg">
+       <circle cx="70" cy="70" r="70" id="loadingCirclePath"></circle>
      </svg>
      <span class="percentage" id="percent">0%</span>
+     <div class="kora-logo" id="koraLogo">
+       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+         <path d="M50 10 C30 10, 15 25, 15 45 C15 65, 30 80, 50 80 C70 80, 85 65, 85 45 C85 25, 70 10, 50 10 Z M50 20 C65 20, 75 30, 75 45 C75 60, 65 70, 50 70 C35 70, 25 60, 25 45 C25 30, 35 20, 50 20 Z"/>
+       </svg>
+     </div>
   </div>
 </div>
 
@@ -209,8 +286,8 @@ body{
   <div class="overlay"></div>
   <!-- Panel -->
   <div class="panel" id="panel">
-           <div class="brand">Offshore</div>
-      <p class="subcopy">Sign up for exclusive access to our upcoming gym launch. Be the first to get updates, news, and a front-row seat to the reveal!</p>
+           <div class="brand">Kora</div>
+      <p class="subcopy">Sign up for exclusive access to our upcoming fashion launch. Be the first to get updates, news, and a front-row seat to the reveal!</p>
       
       <h1 class="headline" id="headline">
         <span>UNLOCK</span>
@@ -262,8 +339,15 @@ body{
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const loader = document.getElementById('loader');
-  const circle = document.querySelector('.loader svg circle');
+  const startButton = document.getElementById('startButton');
+  const loadingCircle = document.getElementById('loadingCircle');
+  const loadingSvg = document.getElementById('loadingSvg');
+  const loadingCirclePath = document.getElementById('loadingCirclePath');
   const percentEl = document.getElementById('percent');
+  const koraLogo = document.getElementById('koraLogo');
+  
+  // Initially hide the loading circle
+  loadingCircle.style.display = 'none';
   
   // Check if GSAP loaded properly
   if (typeof gsap === 'undefined') {
@@ -273,23 +357,77 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
   
-  // Loader timeline
-  const tlLoader = gsap.timeline({
-    onComplete: launchSite
+  // Start button click handler
+  startButton.addEventListener('click', () => {
+    // Hide start button and show loading circle
+    gsap.to(startButton, {opacity: 0, duration: 0.3, ease: 'power2.out'});
+    gsap.set(loadingCircle, {display: 'flex', opacity: 0});
+    gsap.to(loadingCircle, {opacity: 1, duration: 0.3, ease: 'power2.out'});
+    
+    // Start loading animation
+    startLoading();
   });
   
-  tlLoader.to(circle, {
-    duration:2.2,
-    strokeDashoffset:0,
-    ease:'power1.inOut'
-  });
-  tlLoader.to({}, {duration:0.1}); // slight pause
-  tlLoader.to(percentEl, {
-    innerText:100,
-    duration:2.2,
-    snap:{innerText:1},
-    ease:'power1.inOut'
-  }, "<");
+  function startLoading() {
+    // Loader timeline
+    const tlLoader = gsap.timeline({
+      onComplete: morphToLogo
+    });
+    
+    tlLoader.to(loadingCirclePath, {
+      duration: 2.2,
+      strokeDashoffset: 0,
+      ease: 'power1.inOut'
+    });
+    tlLoader.to({}, {duration: 0.1}); // slight pause
+    tlLoader.to(percentEl, {
+      innerText: 100,
+      duration: 2.2,
+      snap: {innerText: 1},
+      ease: 'power1.inOut'
+    }, "<");
+  }
+  
+  function morphToLogo() {
+    // Fade out percentage text
+    gsap.to(percentEl, {opacity: 0, duration: 0.3, ease: 'power2.out'});
+    
+    // Morph circle to square and change to white
+    gsap.to(loadingCircle, {
+      borderRadius: '0%',
+      backgroundColor: 'transparent',
+      boxShadow: 'none',
+      duration: 0.8,
+      ease: 'power2.inOut'
+    });
+    
+    gsap.to(loadingSvg, {
+      rotation: 0,
+      duration: 0.8,
+      ease: 'power2.inOut'
+    });
+    
+    gsap.to(loadingCirclePath, {
+      fill: '#fff',
+      stroke: '#fff',
+      strokeWidth: 0,
+      strokeDasharray: 0,
+      strokeDashoffset: 0,
+      duration: 0.8,
+      ease: 'power2.inOut',
+      onComplete: showKoraLogo
+    });
+  }
+  
+  function showKoraLogo() {
+    // Show Kora logo
+    gsap.to(koraLogo, {
+      opacity: 1,
+      duration: 0.5,
+      ease: 'power2.out',
+      onComplete: launchSite
+    });
+  }
   
   function launchSite(){
     gsap.to(loader, {autoAlpha:0, duration:0.6, ease:'power2.out'});

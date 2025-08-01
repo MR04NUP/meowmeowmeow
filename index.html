@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Offshore</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ---- Reset ---- */
+*,
+*::before,
+*::after{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:#111;
+  overflow-x:hidden;
+}
+/* ---- Loader ---- */
+.loader{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fff;
+  z-index:99;
+  flex-direction:column;
+}
+.loader .circle{
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 0 10px rgba(0,0,0,.05);
+  position:relative;
+}
+.loader .percentage{
+  position:absolute;
+  font-weight:700;
+  font-size:2rem;
+  color:#000;
+}
+.loader svg{
+  transform:rotate(-90deg);
+}
+.loader svg circle{
+  fill:none;
+  stroke-width:8;
+  stroke:#000;
+  stroke-dasharray:440;
+  stroke-dashoffset:440;
+}
+/* ---- Hero background ---- */
+.hero{
+  width:100%;
+  height:100vh;
+  background:url('IMG_0076_upscayl_5x_ultrasharp-4x.png') center/cover no-repeat;
+  background-color: #333; /* Fallback color */
+  position:relative;
+  overflow:hidden;
+}
+.overlay{
+  position:absolute;
+  inset:0;
+  backdrop-filter:blur(4px);
+}
+/* ---- Panel ---- */
+.panel{
+  position:absolute;
+  top:4rem;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  max-width:1100px;
+  background:#EFEAE6;
+  padding:4rem 3rem 6rem;
+  border-radius:8px;
+  background-image:
+    radial-gradient(#d5d0c9 2px, transparent 2px);
+  background-size:20px 20px;
+  overflow:hidden;
+  opacity:0;
+}
+.brand{
+  font-weight:700;
+  text-align:center;
+  margin-bottom:2rem;
+}
+.subcopy{
+  max-width:480px;
+  margin-inline:auto;
+  text-align:center;
+  font-size:0.95rem;
+  line-height:1.4;
+  margin-bottom:2rem;
+}
+.headline{
+  font-size:7vw;
+  font-weight:900;
+  line-height:0.9;
+  text-transform:uppercase;
+  color:#000;
+  position:relative;
+  margin-bottom:3rem;
+}
+.headline span{
+  display:block;
+}
+.photo{
+  position:absolute;
+  width:160px;
+  overflow:hidden;
+  border-radius:4px;
+  transform:scale(0.6);
+  opacity:0;
+}
+.photo img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.photo.tl{
+  top:2rem;
+  left:2rem;
+}
+.photo.br{
+  right:2rem;
+  bottom:2rem;
+}
+.signup{
+  position:relative;
+  margin-inline:auto;
+  margin-top:2rem;
+  max-width:420px;
+  padding:2rem 2rem 3rem;
+  background:#FFA55A;
+  border-radius:12px;
+  box-shadow:0 10px 25px rgba(0,0,0,.1);
+  transform:scale(0.8);
+  opacity:0;
+}
+.signup label{
+  display:block;
+  font-size:0.75rem;
+  font-weight:700;
+  margin-bottom:0.35rem;
+}
+.signup input[type="text"],
+.signup input[type="email"],
+.signup input[type="tel"],
+.signup select{
+  width:100%;
+  padding:0.65rem 1rem;
+  border:0;
+  border-radius:6px;
+  margin-bottom:1rem;
+  font-size:0.85rem;
+}
+.signup .row{
+  display:flex;
+  gap:0.5rem;
+}
+.signup .row select{
+  flex:0 0 110px;
+}
+.signup .row input{
+  flex:1;
+}
+.signup button{
+  display:block;
+  margin-left:auto;
+  padding:0.65rem 1.75rem;
+  font-size:0.9rem;
+  font-weight:700;
+  border:0;
+  border-radius:6px;
+  cursor:pointer;
+  background:#000;
+  color:#fff;
+}
+/* Util */
+.hidden{
+  visibility:hidden;
+}
+</style>
+</head>
+<body>
+<!-- Loader -->
+<div class="loader" id="loader">
+  <div class="circle">
+     <svg width="140" height="140">
+       <circle cx="70" cy="70" r="70"></circle>
+     </svg>
+     <span class="percentage" id="percent">0%</span>
+  </div>
+</div>
+
+<!-- Hero background -->
+<section class="hero" id="hero">
+  <div class="overlay"></div>
+  <!-- Panel -->
+  <div class="panel" id="panel">
+           <div class="brand">Offshore</div>
+      <p class="subcopy">Sign up for exclusive access to our upcoming gym launch. Be the first to get updates, news, and a front-row seat to the reveal!</p>
+      
+      <h1 class="headline" id="headline">
+        <span>UNLOCK</span>
+        <span>FIRST</span>
+        <span>ACCESS</span>
+        <span>TO</span>
+        <span>FASHION</span>
+        <span>DROP</span>
+      </h1>
+     
+     <div class="photo tl" id="photoTL">
+       <img src="IMG_0076_upscayl_5x_ultrasharp-4x.png" alt="">
+     </div>
+     <div class="photo br" id="photoBR">
+       <img src="IMG_0076_upscayl_5x_ultrasharp-4x.png" alt="">
+     </div>
+     
+     <!-- Sign-up form -->
+     <form class="signup" id="signup">
+       <label>Name</label>
+       <input type="text" placeholder="enter your name">
+       <label>Email</label>
+       <input type="email" placeholder="example@mail.com">
+       <label>Phone number</label>
+       <div class="row">
+          <select id="countryCode" name="countryCode">
+            <option value="+1">+1 (US)</option>
+            <option value="+44">+44 (UK)</option>
+            <option value="+41" selected>+41 (CH)</option>
+            <option value="+61">+61 (AU)</option>
+            <option value="+91">+91 (IN)</option>
+          </select>
+          <input type="tel" placeholder="123456789">
+       </div>
+               <div style="display:flex;align-items:center;gap:0.5rem;margin-block:1rem 1.5rem;font-size:0.8rem;">
+           <input type="checkbox" id="sub">
+           <label for="sub">Subscribe to Newsletter</label>
+        </div>
+        <div style="font-size:0.8rem;margin-bottom:1.5rem;">
+           Yes, send me updates and exclusive offers!
+        </div>
+       <button type="submit">Sign Up</button>
+     </form>
+  </div>
+</section>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const loader = document.getElementById('loader');
+  const circle = document.querySelector('.loader svg circle');
+  const percentEl = document.getElementById('percent');
+  
+  // Check if GSAP loaded properly
+  if (typeof gsap === 'undefined') {
+    // Fallback: hide loader immediately and show content
+    loader.style.display = 'none';
+    document.getElementById('panel').style.opacity = '1';
+    return;
+  }
+  
+  // Loader timeline
+  const tlLoader = gsap.timeline({
+    onComplete: launchSite
+  });
+  
+  tlLoader.to(circle, {
+    duration:2.2,
+    strokeDashoffset:0,
+    ease:'power1.inOut'
+  });
+  tlLoader.to({}, {duration:0.1}); // slight pause
+  tlLoader.to(percentEl, {
+    innerText:100,
+    duration:2.2,
+    snap:{innerText:1},
+    ease:'power1.inOut'
+  }, "<");
+  
+  function launchSite(){
+    gsap.to(loader, {autoAlpha:0, duration:0.6, ease:'power2.out'});
+    
+    const tl = gsap.timeline({defaults:{ease:'power3.out'}});
+    
+    // Panel in
+    tl.to('#panel', {opacity:1, duration:0.6});
+    
+    // Headline word-by-word float with motion blur
+    const words = [...document.querySelectorAll('#headline span')];
+    gsap.set(words, {y:100, opacity:0, filter:'blur(20px)'});
+    tl.to(words, {
+      y:0,
+      opacity:1,
+      filter:'blur(0px)',
+      duration:1.2,
+      ease:'power4.out',
+      stagger:0.1
+    }, "-=0.4");
+    
+    // Photos float
+    tl.fromTo('#photoTL', {y:-50, scale:0.6, opacity:0}, {y:0, scale:1, opacity:1, duration:1}, "-=0.9");
+    tl.fromTo('#photoBR', {y:50, scale:0.6, opacity:0}, {y:0, scale:1, opacity:1, duration:1}, "-=0.9");
+    
+    // Signup card pop
+    tl.fromTo('#signup', {scale:0.8, opacity:0, y:40}, {scale:1, opacity:1, y:0, duration:1}, "-=0.6");
+  }
+});
+</script>
+</body>
+</html>

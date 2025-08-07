@@ -11,6 +11,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const percentEl = document.getElementById('percent'); // Percentage text element
   const koraLogo = document.getElementById('koraLogo'); // Kora logo elemenet
   
+  // ===== INTERNATIONAL PHONE INPUT INITIALIZATION =====
+  // Initialize the international phone input
+  let phoneInput;
+  if (typeof intlTelInput !== 'undefined') {
+    phoneInput = intlTelInput('#phone', {
+      preferredCountries: ['ch', 'us', 'gb', 'de', 'fr', 'it', 'es', 'nl', 'au', 'in', 'np'],
+      separateDialCode: true,
+      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+      autoPlaceholder: 'aggressive',
+      formatOnDisplay: true,
+      geoIpLookup: function(callback) {
+        // Use a free IP geolocation service
+        fetch('https://ipapi.co/json/')
+          .then(res => res.json())
+          .then(data => callback(data.country_code))
+          .catch(() => callback('ch')); // Default to Switzerland if lookup fails
+      }
+    });
+  }
+  
   // ===== INITIAL SETUP =====
   // Hide the loading circle initially - only show the start button
   loadingCircle.style.display = 'none';
@@ -159,5 +179,63 @@ document.addEventListener('DOMContentLoaded', () => {
       {scale:1, opacity:1, y:0, duration:1}, // End position
       "-=0.6" // Timing offset
     );
+  }
+  
+  // ===== FORM VALIDATION =====
+  // Handle form submission with phone number validation
+  const signupForm = document.getElementById('signup');
+  if (signupForm) {
+    signupForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form data
+      const formData = new FormData(signupForm);
+      const name = signupForm.querySelector('input[type="text"]').value;
+      const email = signupForm.querySelector('input[type="email"]').value;
+      const newsletter = signupForm.querySelector('input[type="checkbox"]').checked;
+      
+      // Validate phone number
+      let phoneNumber = '';
+      let phoneError = '';
+      
+      if (phoneInput && phoneInput.isValidNumber()) {
+        phoneNumber = phoneInput.getNumber(); // Get full international number
+      } else {
+        phoneError = 'Please enter a valid phone number';
+      }
+      
+      // Basic validation
+      if (!name.trim()) {
+        alert('Please enter your name');
+        return;
+      }
+      
+      if (!email.trim() || !email.includes('@')) {
+        alert('Please enter a valid email address');
+        return;
+      }
+      
+      if (phoneError) {
+        alert(phoneError);
+        return;
+      }
+      
+      // If all validation passes, you can submit the data
+      console.log('Form data:', {
+        name: name,
+        email: email,
+        phone: phoneNumber,
+        newsletter: newsletter
+      });
+      
+      // Here you would typically send the data to your server
+      alert('Thank you for signing up! We\'ll be in touch soon.');
+      
+      // Reset form
+      signupForm.reset();
+      if (phoneInput) {
+        phoneInput.setCountry('ch'); // Reset to default country
+      }
+    });
   }
 }); 

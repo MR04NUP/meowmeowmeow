@@ -8,30 +8,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 <!-- External CSS -->
 <link rel="stylesheet" href="styles.css">
+<!-- International Telephone Input CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
 </head>
 <body>
-<!-- ===== LOADER SECTION ===== -->
-<!-- Full-screen loader with start button and loading animation -->
-<div class="loader" id="loader">
-  <!-- Start button - first thing user sees -->
-  <button class="start-button" id="startButton">Experience Bliss</button>
-  
-  <!-- Loading circle container - appears after button click -->
-  <div class="circle" id="loadingCircle">
-     <!-- SVG for circular progress animation -->
-     <svg width="140" height="140" id="loadingSvg">
-       <circle cx="70" cy="70" r="70" id="loadingCirclePath"></circle>
-     </svg>
-     
-     <!-- Percentage text displayed in center -->
-     <span class="percentage" id="percent">0%</span>
-     
-     <!-- Kora logo - appears after morphing animation -->
-     <div class="kora-logo" id="koraLogo">
-       <img src="KORA_Icon_Black_PNG.png" alt="Kora Logo">
-     </div>
-  </div>
-</div>
+
 
 <!-- ===== HERO SECTION ===== -->
 <!-- Full-screen hero section with background image -->
@@ -44,7 +25,6 @@
   <div class="panel" id="panel">
     <img src="KORA_Lockup_Horizontal_Black_PNG.png" alt="Kora Logo">
 
-
      <!-- Large headline with each word on separate line -->
      <h1 class="headline" id="headline">
        <span>BE THE FIRST</span>
@@ -53,10 +33,10 @@
      </h1>
      
      <!-- Decorative photos positioned in corners -->
-     <div class="photo tl" id="photoTL">
+     <div class="r-photo-tl" id="photoTL">
        <img src="render2.jpg" alt="Lifestyle photo">
      </div>
-     <div class="photo br" id="photoBR">
+     <div class="r-photo-br" id="photoBR">
        <img src="render3.jpg" alt="Lifestyle photo">
      </div>
      
@@ -66,7 +46,7 @@
       <p class="subcopy">Join our waitlist for news, launch updates, and a first look at Kora; a new kind of gym focused on holistic health, movement, and community!</p>
        <!-- Name input field -->
        <label>Name</label>
-       <input type="text" placeholder="enter your name">
+       <input type="text" placeholder="Full Name">
        
        <!-- Email input field -->
        <label>Email</label>
@@ -74,17 +54,9 @@
        
        <!-- Phone number section with country code -->
        <label>Phone number</label>
-       <div class="row">
-          <!-- Country code dropdown -->
-          <select id="countryCode" name="countryCode">
-            <option value="+1">+1 (US)</option>
-            <option value="+44">+44 (UK)</option>
-            <option value="+41" selected>+41 (CH)</option>
-            <option value="+61">+61 (AU)</option>
-            <option value="+91">+91 (IN)</option>
-          </select>
-          <!-- Phone number input -->
-          <input type="tel" placeholder="123456789">
+       <div class="phone-input-container">
+          <!-- Phone number input with auto country detection -->
+          <input type="tel" id="phone" placeholder="Enter phone number">
        </div>
        
        <!-- Newsletter subscription checkbox -->
@@ -102,11 +74,15 @@
         <button type="submit">Sign Up</button>
      </form>
   </div>
+
 </section>
 
 <!-- ===== GSAP ANIMATION LIBRARY ===== -->
 <!-- Load GSAP for smooth animations -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<!-- ===== INTERNATIONAL TELEPHONE INPUT LIBRARY ===== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
 <!-- ===== EXTERNAL JAVASCRIPT ===== -->
 <script src="script.js"></script>

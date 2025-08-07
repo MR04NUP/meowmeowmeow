@@ -22,6 +22,16 @@
   font-style: normal;
 }
 
+/* Fluid sizing variables */
+:root{
+  --panel-max-width: clamp(320px, 92vw, 1200px);
+  --panel-radius: clamp(16px, 3vw, 30px);
+  --panel-pad: clamp(1.25rem, 4vw, 5rem);
+  --panel-top-offset: clamp(1.5rem, 5vw, 5rem);
+  --headline-size: clamp(1.75rem, 6vw, 7rem);
+  --logo-max-width: clamp(160px, 28vw, 600px);
+}
+
 /* Base body styles with Inter font and dark background */
 body{
   font-family:'CityBoys', sans-serif;
@@ -55,16 +65,16 @@ body{
 /* Central panel containing all the main content */
 .panel{
   position:relative; /* Changed from absolute to relative for better flow */
-  top:5rem; /* Distance from top */
+  top:var(--panel-top-offset); /* Fluid distance from top */
   left:50%;
   transform:translateX(-50%); /* Center horizontally */
   width:100%; /* Responsive width */
-  max-width:1400px; /* Maximum width for large screens */
+  max-width:var(--panel-max-width); /* Fluid maximum width */
   background:#fff0de; /* Light beige background */
-  padding:5rem 5rem 5rem; /* Internal spacing */
-  border-radius:30px; /* Rounded corners */
+  padding:var(--panel-pad); /* Fluid internal spacing */
+  border-radius:var(--panel-radius); /* Fluid rounded corners */
   overflow:hidden; /* Allow content to overflow for scrolling */
-  margin-bottom: 5rem; /* Add bottom margin for spacing */
+  margin-bottom: clamp(2rem, 6vw, 5rem); /* Fluid bottom spacing */
   z-index: 10; /* Ensure it's above the background */
   word-wrap: break-word;
 }
@@ -90,7 +100,7 @@ body{
 /* ===== HEADLINE STYLES ===== */
 /* Large, bold headline text */
 .headline{
-  font-size:6vw; /* Larger font size for more dramatic overlap */
+  font-size:var(--headline-size); /* Fluid headline size */
   font-weight:900; /* Extra bold weight */
   line-height:0.8; /* Tighter line spacing for impact */
   text-transform:uppercase; /* All caps for emphasis */
@@ -244,13 +254,18 @@ body{
 }
 
 .logo-container {
-  width:auto;
+  width:100%;
   height:auto;
-  object-fit:contain;
   position:relative;
-  margin: 0 auto 4rem auto;
-  max-width: 600px;
-  object-fit: contain;
+  margin: 0 auto clamp(1.5rem, 4vw, 4rem) auto;
+  max-width: var(--logo-max-width);
+}
+
+.logo-container img{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:contain;
 }
 
 /* Disabled button state */

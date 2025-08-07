@@ -22,7 +22,6 @@
   font-style: normal;
 }
 
-
 /* Base body styles with Inter font and dark background */
 body{
   font-family:'CityBoys', sans-serif;
@@ -33,24 +32,12 @@ body{
   height: auto; /* Allow body to grow with content */
 }
 
-.kora-logo-image{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  position:absolute;
-  top:0;
-  left:0;
-  z-index:10;
-}
-
-
-
 /* ===== HERO SECTION STYLES ===== */
 /* Full-screen hero section with background image */
 .hero{
   width:100%;
   min-height:100vh; /* Minimum viewport height, can grow if needed */
-  background:url('img.jpg') center/cover no-repeat; /* Background image */
+  background:url('imgs/background.jpg') center/cover no-repeat; /* Background image */
   background-color: #333; /* Fallback color if image fails to load */
   position:relative;
   overflow:visible; /* Allow content to overflow for scrolling */
@@ -61,26 +48,25 @@ body{
 .overlay{
   position:absolute;
   inset:0; /* Cover entire hero section */
-  backdrop-filter:blur(10px); /* Blur effect for depth */
+  backdrop-filter:blur(5px); /* Blur effect for depth */
 }
 
 /* ===== MAIN CONTENT PANEL STYLES ===== */
 /* Central panel containing all the main content */
 .panel{
   position:relative; /* Changed from absolute to relative for better flow */
-  top:6rem; /* Distance from top */
+  top:5rem; /* Distance from top */
   left:50%;
   transform:translateX(-50%); /* Center horizontally */
-  width:80%; /* Responsive width */
-  max-width:1100px; /* Maximum width for large screens */
+  width:100%; /* Responsive width */
+  max-width:1400px; /* Maximum width for large screens */
   background:#fff0de; /* Light beige background */
-  padding:4rem 3rem 6rem; /* Internal spacing */
-  border-radius:20px; /* Rounded corners */
-  background-size: 30px 30px; /* Dot pattern spacing */
-  overflow:visible; /* Allow content to overflow for scrolling */
-  opacity:1; /* Now visible by default */
-  margin-bottom: 2rem; /* Add bottom margin for spacing */
+  padding:5rem 5rem 5rem; /* Internal spacing */
+  border-radius:30px; /* Rounded corners */
+  overflow:hidden; /* Allow content to overflow for scrolling */
+  margin-bottom: 5rem; /* Add bottom margin for spacing */
   z-index: 10; /* Ensure it's above the background */
+  word-wrap: break-word;
 }
 
 /* ===== TYPOGRAPHY STYLES ===== */
@@ -104,13 +90,16 @@ body{
 /* ===== HEADLINE STYLES ===== */
 /* Large, bold headline text */
 .headline{
-  font-size:15vw; /* Responsive font size based on viewport width */
+  font-size:6vw; /* Larger font size for more dramatic overlap */
   font-weight:900; /* Extra bold weight */
-  line-height:0.9; /* Tight line spacing for impact */
+  line-height:0.8; /* Tighter line spacing for impact */
   text-transform:uppercase; /* All caps for emphasis */
   color:#272727;
   position:relative;
-  margin-bottom:3rem;
+  margin-bottom:0; /* Remove bottom margin to allow overlap */
+  z-index: 1; /* Lower z-index so form can overlap */
+  font-family: 'CityBoys-Bold', sans-serif;
+  text-align: center; /* Center the headline text */
 }
 
 /* Each word in the headline is on its own line */
@@ -118,50 +107,20 @@ body{
   display:block; /* Stack words vertically */
 }
 
-/* ===== PHOTO STYLES ===== */
-/* Decorative photos positioned in corners */
-.photo{
-  position:absolute; /* Positioned absolutely within the panel */
-  width:160px;
-  overflow:hidden; /* Hide overflow */
-  border-radius:4px; /* Slightly rounded corners */
-  transform:scale(0.6); /* Initially scaled down */
-  opacity:0; /* Initially hidden for animation */
-}
-
-/* Photo image styling */
-.photo img{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:cover; /* Maintain aspect ratio while filling container */
-}
-
-/* Top-left photo positioning */
-.photo.tl{
-  top:2rem;
-  left:2rem;
-}
-
-/* Bottom-right photo positioning */
-.photo.br{
-  right:2rem;
-  bottom:2rem;
-}
-
 /* ===== SIGNUP FORM STYLES ===== */
 /* Main signup form container */
 .signup{
   position:relative;
   margin-inline:auto; /* Center horizontally */
-  margin-top:2rem;
+  margin-top:-8rem; /* Negative margin to overlap the headline */
   max-width:420px; /* Limit width for optimal form usability */
   padding:2rem 2rem 3rem; /* Internal spacing */
   background:#b6ac9f; /* Orange background */
   border-radius:12px; /* Rounded corners */
   box-shadow:0 10px 25px rgba(0,0,0,.1); /* Drop shadow for depth */
-  transform:scale(0.8); /* Initially scaled down */
-  opacity:0; /* Initially hidden for animation */
+  transform:scale(1); /* Full scale since no animation */
+  opacity:1; /* Visible by default */
+  z-index: 20; /* Higher z-index to overlap headline */
 }
 
 /* ===== FORM INPUT STYLES ===== */
@@ -265,6 +224,126 @@ body{
   cursor:pointer; /* Hand cursor on hover */
   background:#000; /* Black background */
   color:#fff; /* White text */
+  transition: all 0.3s ease; /* Smooth transitions */
+  position: relative; /* For tooltip positioning */
+}
+
+/* Enabled button state */
+.signup button.enabled {
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.signup button.enabled:hover {
+  background: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.logo-container {
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  position:relative;
+  margin: 0 auto 4rem auto;
+  max-width: 600px;
+  object-fit: contain;
+}
+
+/* Disabled button state */
+.signup button.disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.signup button.disabled:hover {
+  background: #ccc;
+  color: #666;
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Validation tooltip */
+.validation-tooltip {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  background: #ff4444;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 1000;
+  animation: tooltipFadeIn 0.2s ease;
+}
+
+.validation-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 1rem;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #ff4444;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tooltipFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+}
+
+.validation-tooltip.fade-out {
+  animation: tooltipFadeOut 0.2s ease forwards;
+}
+
+/* Success message */
+.success-message {
+  background: #4CAF50;
+  color: white;
+  padding: 1rem;
+  border-radius: 6px;
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 500;
+  animation: successFadeIn 0.3s ease;
+}
+
+@keyframes successFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ===== UTILITY CLASSES ===== */
@@ -283,16 +362,13 @@ body{
   }
   
   .headline {
-    font-size: 12vw; /* Smaller font size on mobile */
-    margin-bottom: 2rem;
+    font-size: 16vw; /* Adjusted font size on mobile */
+    margin-bottom: 0;
   }
-  
-  .photo {
-    width: 120px; /* Smaller photos on mobile */
-  }
-  
+
   .signup {
     padding: 1.5rem 1.5rem 2.5rem; /* Reduced padding */
+    margin-top: -6rem; /* Adjusted overlap for mobile */
   }
 }
 
@@ -304,10 +380,6 @@ body{
   }
   
   .headline {
-    font-size: 10vw; /* Even smaller font size */
-  }
-  
-  .photo {
-    width: 100px; /* Even smaller photos */
+    font-size: 10vw; /* Adjusted font size for very small screens */
   }
 } 

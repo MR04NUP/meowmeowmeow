@@ -8,9 +8,24 @@
   box-sizing:border-box;
 }
 
+@font-face {
+  font-family: 'CityBoys';
+  src: url('fonts/City Boys/CityBoys-Regular.otf') format('otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CityBoys-Bold';
+  src: url('fonts/City Boys/CityBoys-Bold.otf') format('otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 /* Base body styles with Inter font and dark background */
 body{
-  font-family:'Inter',system-ui,sans-serif;
+  font-family:'CityBoys', sans-serif;
   background:#111;
   overflow-x:hidden; /* Prevent horizontal scrolling */
   overflow-y: auto; /* Allow vertical scrolling when needed */
@@ -19,8 +34,8 @@ body{
 }
 
 .kora-logo-image{
-  width:20%;
-  height:20%;
+  width:100%;
+  height:100%;
   object-fit:cover;
   position:absolute;
   top:0;
@@ -28,139 +43,7 @@ body{
   z-index:10;
 }
 
-/* ===== LOADER & START BUTTON STYLES ===== */
-/* Full-screen loader container that covers the entire viewport */
-.loader{
-  position:fixed; /* Fixed positioning to cover entire screen */
-  inset:0; /* Shorthand for top:0, right:0, bottom:0, left:0 */
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:transparent; /* Transparent background */
-  z-index:99; /* High z-index to stay on top */
-  flex-direction:column; /* Stack elements vertically */
-}
 
-/* Styling for the "Experience Bliss" start button */
-.start-button{
-  padding:1.5rem 2rem; /* Vertical and horizontal padding */
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size:1.6rem;
-  font-weight:700;
-  background:#000; /* Black background */
-  color:#fff; /* White text */
-  border:none;
-  border-radius:50px; /* Rounded corners */
-  cursor:pointer;
-  transition:all 0.3s ease; /* Smooth transition for hover effects */
-  box-shadow:0 4px 20px rgba(0,0,0,0.1); /* Subtle shadow */
-}
-
-/* Hover effect for the start button */
-.start-button:hover{
-  transform:translateY(-2px); /* Slight upward movement */
-  box-shadow:0 6px 25px rgba(0,0,0,0.15); /* Enhanced shadow on hover */
-}
-
-/* ===== LOADING CIRCLE STYLES ===== */
-/* Circular loading indicator that morphs into the Kora logo */
-.loader .circle{
-  width:140px;
-  height:140px;
-  border-radius:50%; /* Perfect circle */
-  background:#fff; /* White background */
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 0 0 10px rgba(0,0,0,.05); /* Subtle outer shadow */
-  position:relative; /* For absolute positioning of child elements */
-  transition:all 0.8s ease; /* Smooth transition for morphing */
-}
-
-/* Styles applied during the morphing animation */
-.loader .circle.morphing{
-  border-radius:0; /* Transform to square */
-  background:transparent; /* Remove background */
-  box-shadow:none; /* Remove shadow */
-}
-
-/* Percentage text displayed in the center of the loading circle */
-.loader .percentage{
-  position:absolute; /* Positioned in center of circle */
-  font-weight:700;
-  font-size:2rem;
-  color:#000;
-  opacity:1;
-  transition:opacity 0.5s ease; /* Smooth fade out */
-}
-
-/* Class to fade out the percentage text */
-.loader .percentage.fade-out{
-  opacity:0;
-}
-
-/* ===== SVG ANIMATION STYLES ===== */
-/* SVG container for the circular progress indicator */
-.loader svg{
-  transform:rotate(-90deg); /* Start from top instead of right */
-  transition:all 0.8s ease; /* Smooth transition for rotation */
-}
-
-/* SVG during morphing - rotate back to normal position */
-.loader svg.morphing{
-  transform:rotate(0deg);
-}
-
-/* Circular progress path - creates the animated ring */
-.loader svg circle{
-  fill:none; /* No fill, only stroke */
-  stroke-width:8; /* Thick stroke for visibility */
-  stroke:#000; /* Black stroke */
-  stroke-dasharray:440; /* Total circumference */
-  stroke-dashoffset:440; /* Start fully hidden */
-  transition:all 0.8s ease; /* Smooth transition for morphing */
-}
-
-/* Circle during morphing - becomes solid white */
-.loader svg circle.morphing{
-  fill:#fff; /* Fill with white */
-  stroke:#fff; /* Stroke also white */
-  stroke-width:0; /* Remove stroke */
-  stroke-dasharray:0; /* Remove dash pattern */
-  stroke-dashoffset:0; /* Reset offset */
-}
-
-/* ===== KORA LOGO STYLES ===== */
-/* Container for the Kora logo that appears after morphing */
-.kora-logo{
-  position:absolute; /* Positioned over the loading circle */
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -50%); /* Center perfectly */
-  width:140px;
-  height:140px;
-  opacity:1; /* Temporarily visible for testing */
-  transition:opacity 0.5s ease; /* Smooth fade in */
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:10; /* Ensure it's above other elements */
-  pointer-events:none; /* Don't interfere with interactions */
-  background:rgba(255,0,0,0.3); /* Temporary red background to see the container */
-}
-
-/* Class to make the logo visible */
-.kora-logo.visible{
-  opacity:1;
-}
-
-/* Logo image styling */
-.kora-logo img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  filter: brightness(0) invert(1); /* Make the black logo white */
-}
 
 /* ===== HERO SECTION STYLES ===== */
 /* Full-screen hero section with background image */
@@ -195,7 +78,7 @@ body{
   border-radius:20px; /* Rounded corners */
   background-size: 30px 30px; /* Dot pattern spacing */
   overflow:visible; /* Allow content to overflow for scrolling */
-  opacity:0; /* Initially hidden for animation */
+  opacity:1; /* Now visible by default */
   margin-bottom: 2rem; /* Add bottom margin for spacing */
   z-index: 10; /* Ensure it's above the background */
 }
@@ -388,11 +271,6 @@ body{
 /* Utility class to hide elements while preserving layout */
 .hidden{
   visibility:hidden; /* Hidden but still takes up space */
-}
-
-/* Ensure scrolling works when loader is hidden */
-.loader.hidden {
-  display: none !important;
 }
 
 /* ===== RESPONSIVE DESIGN ===== */

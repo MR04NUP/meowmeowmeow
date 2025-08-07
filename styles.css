@@ -322,18 +322,18 @@ body{
 .iti__selected-flag {
   background: transparent !important;
   border: none !important;
-  padding: 0.65rem 1rem !important;
-  border-radius: 6px 0 0 6px !important;
+  padding: 0 !important;
+  border-radius: 6px 6px 6px 6px !important;
 }
 
 .iti__flag {
-  transform: scale(1.2);
+  transform: scale(0.5);
 }
 
 .iti__arrow {
   border-left: 4px solid transparent !important;
   border-right: 4px solid transparent !important;
-  border-top: 5px solid #555 !important;
+  border-top: 4px solid #555 !important;
 }
 
 .iti__country-list {
@@ -341,12 +341,12 @@ body{
   border: 1px solid #ddd;
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  max-height: 200px;
+  max-height: 150px;
   overflow-y: auto;
 }
 
 .iti__country {
-  padding: 8px 12px;
+  padding: 4px 4px;
   border-bottom: 1px solid #f0f0f0;
 }
 
@@ -360,9 +360,9 @@ body{
 
 /* Phone input field styling */
 .iti input[type="tel"] {
-  padding-left: 90px !important; /* Space for country flag */
-  border-radius: 0 6px 6px 0 !important;
-  border-left: none !important;
+  padding-left: 50px !important; /* Space for country flag */
+  border-radius:  6px 6px 6px 6px !important;
+  border-left: 6px !important;
 }
 
 .iti__selected-flag:hover {

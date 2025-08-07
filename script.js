@@ -9,18 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const loadingSvg = document.getElementById('loadingSvg'); // SVG element for progress
   const loadingCirclePath = document.getElementById('loadingCirclePath'); // Circle path for animation
   const percentEl = document.getElementById('percent'); // Percentage text element
-  const koraLogo = document.getElementById('koraLogo'); // Kora logo element
-  
-  // Debug: Check if elements are found
-  console.log('Elements found:', {
-    loader: !!loader,
-    startButton: !!startButton,
-    loadingCircle: !!loadingCircle,
-    loadingSvg: !!loadingSvg,
-    loadingCirclePath: !!loadingCirclePath,
-    percentEl: !!percentEl,
-    koraLogo: !!koraLogo
-  });
+  const koraLogo = document.getElementById('koraLogo'); // Kora logo elemenet
   
   // ===== INITIAL SETUP =====
   // Hide the loading circle initially - only show the start button
@@ -142,12 +131,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Step 4: Animate headline words with motion blur effect
     const words = [...document.querySelectorAll('#headline span')];
-    gsap.set(words, {y:100, opacity:0, filter:'blur(20px)'}); // Set initial state
+    gsap.set(words, {y:100, opacity:0, filter:'blur(50px)'}); // Set initial state
     tl.to(words, {
       y:0, // Move to normal position
       opacity:1, // Fade in
       filter:'blur(0px)', // Remove blur
-      duration:1.2,
+      duration:2.0,
       ease:'power4.out',
       stagger:0.1 // Stagger animation for each word
     }, "-=0.4"); // Start slightly before previous animation ends

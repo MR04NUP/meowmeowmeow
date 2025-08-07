@@ -170,24 +170,24 @@ body{
 .overlay{
   position:absolute;
   inset:0; /* Cover entire hero section */
-  backdrop-filter:blur(4px); /* Blur effect for depth */
+  backdrop-filter:blur(10px); /* Blur effect for depth */
 }
 
 /* ===== MAIN CONTENT PANEL STYLES ===== */
 /* Central panel containing all the main content */
 .panel{
   position:absolute; /* Positioned over the hero background */
-  top:4rem; /* Distance from top */
+  top:6rem; /* Distance from top */
   left:50%;
   transform:translateX(-50%); /* Center horizontally */
-  width:90%; /* Responsive width */
+  width:80%; /* Responsive width */
   max-width:1100px; /* Maximum width for large screens */
   background:#EFEAE6; /* Light beige background */
   padding:4rem 3rem 6rem; /* Internal spacing */
-  border-radius:8px; /* Rounded corners */
+  border-radius:30px; /* Rounded corners */
   background-image:
     radial-gradient(#d5d0c9 2px, transparent 2px); /* Dot pattern overlay */
-  background-size:20px 20px; /* Dot pattern spacing */
+  background-size: 30px 30px; /* Dot pattern spacing */
   overflow:hidden; /* Hide overflow */
   opacity:0; /* Initially hidden for animation */
 }

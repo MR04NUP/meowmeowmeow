@@ -190,21 +190,19 @@ function initAnimations() {
   if (typeof gsap === 'undefined') return;
 
   const panel = document.getElementById('panel');
-  const logo = document.querySelector('.brand-bug img');
+  const logo = null; // brand bug removed
+  const introLogo = document.querySelector('.intro-logo');
+  const introWordmark = document.querySelector('.intro-wordmark');
   const featureImgs = document.querySelectorAll('.feature-img');
   const form = document.getElementById('signup');
-
-  console.log('Animation elements found:', {
-    panel: !!panel,
-    logo: !!logo,
-    featureImgs: featureImgs.length,
-    form: !!form
-  });
+  console.log('Form element:', form);
 
   // Set initial states for elements that need to be animated
-  if (logo) gsap.set(logo, { opacity: 0, y: 8 });
+  // brand bug removed
+  if (introLogo) gsap.set(introLogo, { opacity: 0, scale: 0.6, rotate: 0 });
+  if (introWordmark) gsap.set(introWordmark, { opacity: 0 });
   if (featureImgs.length) gsap.set(featureImgs, { opacity: 0, y: 30 });
-  if (form) gsap.set(form, { opacity: 0, y: 20 });
+  // Do not set initial form state via JS; CSS handles it to prevent flash
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
@@ -238,20 +236,33 @@ function initAnimations() {
     tl.from(gymDescription, {
       y: 30,
       opacity: 0,
-      filter: 'blur(4px)',
+      filter: 'blur(6px)',
       duration: 0.8,
       ease: 'power2.out'
     }, '-=0.4');
   }
 
-  // Brand bug: subtle fade-up (no spin)
-  if (logo) {
-    tl.to(logo, {
+  // Intro: fast spin and enlarge for icon at center-top, then fade wordmark
+  if (introLogo) {
+    tl.to(introLogo, {
       opacity: 1,
-      y: 0,
-      duration: 0.6,
+      scale: 1.25,
+      rotate: 360, // even fewer spins
+      duration: 0.9,
+      ease: 'power3.out'
+    }, '-=0.2')
+    .to(introLogo, {
+      scale: 1,
+      rotate: 450,
+      duration: 0.4,
+      ease: 'back.out(1.4)'
+    })
+    .to(introWordmark, {
+      opacity: 1,
+      duration: 0.7,
       ease: 'power2.out'
     }, '-=0.2');
+    // keep on screen: remove fade-out of logo and wordmark
   }
 
   // Feature images staggered float-in
@@ -265,28 +276,24 @@ function initAnimations() {
     }, '-=0.4');
   }
 
-  // Form elements stagger-in
+  // Form elements stagger-in - animate after panel animation
   if (form) {
-    tl.to(form, {
-      y: 0,
-      opacity: 1,
-      duration: 0.6,
-      ease: 'power2.out'
-    }, '-=0.3');
+    console.log('Form found, animating...');
+    tl.fromTo(form,
+      { opacity: 0, y: 24, scale: 0.98 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'power2.out',
+        onStart: () => console.log('Form animation started'),
+        onComplete: () => console.log('Form animation completed')
+      },
+      '+=0.6' // start after other key elements settle
+    );
+  } else {
+    console.log('Form not found!');
   }
 
-  // (No continuous spin for brand bug to avoid distraction)
+  // Brand bug: subtle fade-up after intro
+  // brand bug removed
 
-  // Add subtle floating animation to gym description
-  if (gymDescription) {
-    tl.to(gymDescription, {
-      y: -5,
-      duration: 3,
-      ease: 'power1.inOut',
-      repeat: -1,
-      yoyo: true
-    }, '+=0.2');
-  }
 }
 
 // Wait for DOM and images to load before starting animations

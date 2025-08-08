@@ -73,7 +73,7 @@ body{
   background:#fff0de; /* Light beige background */
   padding:var(--panel-pad); /* Fluid internal spacing */
   border-radius:var(--panel-radius); /* Fluid rounded corners */
-  overflow:hidden; /* Allow content to overflow for scrolling */
+  overflow:hidden; /* Needed for reveal animations */
   margin-bottom: clamp(2rem, 6vw, 5rem); /* Fluid bottom spacing */
   z-index: 10; /* Ensure it's above the background */
   word-wrap: break-word;
@@ -165,27 +165,35 @@ body{
 /* International phone input styling */
 .iti {
   width: 100%;
+  margin-bottom: 1rem;
 }
 
 .iti__flag-container {
-  background: transparent;
+  background: white;
+  border-radius: 6px 0 0 6px;
+  border: none;
 }
 
 .iti__selected-flag {
-  background: transparent !important;
+  background: white !important;
   border: none !important;
-  padding: 0 !important;
-  border-radius: 6px 6px 6px 6px !important;
+  padding: 0.65rem 0.5rem !important;
+  border-radius: 6px 0 0 6px !important;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .iti__flag {
-  transform: scale(0.5);
+  transform: scale(1.2);
+  margin-right: 0.5rem;
 }
 
 .iti__arrow {
   border-left: 4px solid transparent !important;
   border-right: 4px solid transparent !important;
-  border-top: 4px solid #555 !important;
+  border-top: 5px solid #666 !important;
+  margin-left: 0.25rem;
 }
 
 .iti__country-list {
@@ -193,32 +201,48 @@ body{
   border: 1px solid #ddd;
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  max-height: 150px;
+  max-height: 200px;
   overflow-y: auto;
+  margin-top: 2px;
 }
 
 .iti__country {
-  padding: 4px 4px;
+  padding: 8px 12px;
   border-bottom: 1px solid #f0f0f0;
+  font-size: 0.85rem;
 }
 
 .iti__country:hover {
-  background: #f8f8f8;
+  background: #f5f5f5;
 }
 
 .iti__country.iti__active {
-  background: #e3f2fd;
+  background: #e8e8e8;
+}
+
+.iti__country.iti__highlight {
+  background: #f0f0f0;
 }
 
 /* Phone input field styling */
 .iti input[type="tel"] {
-  padding-left: 50px !important; /* Space for country flag */
-  border-radius:  6px 6px 6px 6px !important;
-  border-left: 6px !important;
+  width: 100%;
+  padding: 0.65rem 1rem !important;
+  padding-left: 85px !important; /* Space for country flag and code */
+  border: none !important;
+  border-radius: 6px !important;
+  font-size: 0.85rem;
+  background: white;
 }
 
 .iti__selected-flag:hover {
-  background: rgba(0,0,0,0.05) !important;
+  background: #f9f9f9 !important;
+}
+
+/* Selected dial code styling */
+.iti__selected-dial-code {
+  color: #333;
+  font-weight: 500;
 }
 
 /* ===== SUBMIT BUTTON STYLES ===== */
@@ -236,6 +260,8 @@ body{
   color:#fff; /* White text */
   transition: all 0.3s ease; /* Smooth transitions */
   position: relative; /* For tooltip positioning */
+  visibility: visible; /* Ensure visible */
+  opacity: 1; /* Ensure visible */
 }
 
 /* Enabled button state */
@@ -259,6 +285,7 @@ body{
   position:relative;
   margin: 0 auto clamp(1.5rem, 4vw, 4rem) auto;
   max-width: var(--logo-max-width);
+  z-index: 30; /* Ensure logo sits above other content */
 }
 
 .logo-container img{
@@ -266,6 +293,41 @@ body{
   height:auto;
   display:block;
   object-fit:contain;
+  opacity: 1; /* Ensure visible */
+  visibility: visible; /* Ensure visible */
+  max-height: 200px; /* Prevent oversized logos */
+}
+
+/* Animated headline characters */
+.headline .char{
+  display:inline-block;
+  will-change: transform, opacity, filter;
+}
+
+/* ===== FEATURE IMAGES STYLES ===== */
+.feature-images {
+  display: flex;
+  gap: clamp(1rem, 3vw, 3rem);
+  justify-content: center;
+  align-items: center;
+  margin: clamp(2rem, 5vw, 4rem) 0;
+  flex-wrap: wrap;
+}
+
+.feature-img {
+  max-width: clamp(200px, 25vw, 400px);
+  width: 100%;
+  height: auto;
+  border-radius: clamp(8px, 2vw, 16px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: block; /* Ensure images are block level */
+  object-fit: cover; /* Ensure proper image fitting */
+}
+
+.feature-img:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.2);
 }
 
 /* Disabled button state */
@@ -380,6 +442,15 @@ body{
     font-size: 16vw; /* Adjusted font size on mobile */
     margin-bottom: 0;
   }
+  
+  .feature-images {
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  
+  .feature-img {
+    max-width: clamp(150px, 40vw, 300px);
+  }
 
   .signup {
     padding: 1.5rem 1.5rem 2.5rem; /* Reduced padding */
@@ -396,5 +467,14 @@ body{
   
   .headline {
     font-size: 10vw; /* Adjusted font size for very small screens */
+  }
+  
+  .feature-images {
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+  }
+  
+  .feature-img {
+    max-width: clamp(120px, 45vw, 250px);
   }
 } 

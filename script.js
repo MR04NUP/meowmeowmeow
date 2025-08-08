@@ -156,3 +156,127 @@ function showSuccessMessage() {
 document.addEventListener('DOMContentLoaded', function() {
   validateForm();
 });
+
+// === Animations with GSAP ===
+function splitHeadlineIntoSpans() {
+  const headline = document.getElementById('headline');
+  if (!headline) return [];
+  const spans = Array.from(headline.querySelectorAll('span'));
+  if (spans.length === 0) return [];
+  const chars = [];
+  spans.forEach(span => {
+    const text = span.textContent || '';
+    span.textContent = '';
+    for (const ch of text) {
+      const charSpan = document.createElement('span');
+      charSpan.className = 'char';
+      if (ch === ' ') {
+        charSpan.innerHTML = '&nbsp;';
+      } else {
+        charSpan.textContent = ch;
+      }
+      span.appendChild(charSpan);
+      chars.push(charSpan);
+    }
+  });
+  return chars;
+}
+
+function initAnimations() {
+  if (typeof gsap === 'undefined') return;
+
+  const panel = document.getElementById('panel');
+  const logo = document.querySelector('.logo-container img');
+  const featureImgs = document.querySelectorAll('.feature-img');
+  const form = document.getElementById('signup');
+
+  console.log('Animation elements found:', {
+    panel: !!panel,
+    logo: !!logo,
+    featureImgs: featureImgs.length,
+    form: !!form
+  });
+
+  // Set initial states for elements that need to be animated
+  if (logo) gsap.set(logo, { opacity: 0, y: 20 });
+  if (featureImgs.length) gsap.set(featureImgs, { opacity: 0, y: 30 });
+  if (form) gsap.set(form, { opacity: 0, y: 20 });
+
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+  // Main panel sweep-in from bottom (bottom anchored) using clip-path reveal
+  if (panel) {
+    tl.from(panel, {
+      clipPath: 'inset(100% 0% 0% 0%)',
+      opacity: 0,
+      filter: 'blur(12px)',
+      duration: 1.0,
+      ease: 'power4.out'
+    });
+  }
+
+  // Headline randomized character reveal with blur
+  const chars = splitHeadlineIntoSpans();
+  if (chars.length) {
+    tl.from(chars, {
+      yPercent: 120,
+      opacity: 0,
+      filter: 'blur(6px)',
+      rotateZ: () => gsap.utils.random(-8, 8),
+      duration: 0.6,
+      stagger: { each: 0.02, from: 'random' },
+      ease: 'back.out(1.8)'
+    }, '-=0.3');
+  }
+
+  // Logo pop-in
+  if (logo) {
+    tl.to(logo, {
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
+      ease: 'power2.out'
+    }, '-=0.3');
+  }
+
+  // Feature images staggered float-in
+  if (featureImgs && featureImgs.length) {
+    tl.to(featureImgs, {
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
+      stagger: 0.2,
+      ease: 'power2.out'
+    }, '-=0.4');
+  }
+
+  // Form elements stagger-in
+  if (form) {
+    tl.to(form, {
+      y: 0,
+      opacity: 1,
+      duration: 0.6,
+      ease: 'power2.out'
+    }, '-=0.3');
+  }
+}
+
+// Wait for DOM and images to load before starting animations
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(initAnimations, 200); // Small delay to ensure images are registered
+  });
+} else {
+  setTimeout(initAnimations, 200);
+}
+
+// Fallback: ensure elements are visible after 3 seconds if animations don't work
+setTimeout(() => {
+  const logo = document.querySelector('.logo-container img');
+  const featureImgs = document.querySelectorAll('.feature-img');
+  const form = document.getElementById('signup');
+  
+  if (logo) gsap.set(logo, { opacity: 1, y: 0 });
+  if (featureImgs.length) gsap.set(featureImgs, { opacity: 1, y: 0 });
+  if (form) gsap.set(form, { opacity: 1, y: 0 });
+}, 3000);

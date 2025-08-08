@@ -142,14 +142,18 @@ if (signupForm) {
   });
 }
 
-// Success message function
+// Success message function (replace card contents)
 function showSuccessMessage() {
-  const successDiv = document.createElement('div');
-  successDiv.className = 'success-message';
-  successDiv.textContent = "Thank you for signing up! We'll be in touch soon.";
-  
-  signupForm.appendChild(successDiv);
-
+  if (!signupForm) return;
+  signupForm.innerHTML = `
+    <div class="success-message" role="status" aria-live="polite">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:8px;">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+        <polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+      You're on the list. We'll be in touch soon.
+    </div>
+  `;
 }
 
 // Initialize validation on page load
@@ -186,7 +190,7 @@ function initAnimations() {
   if (typeof gsap === 'undefined') return;
 
   const panel = document.getElementById('panel');
-  const logo = document.querySelector('.logo-container img');
+  const logo = document.querySelector('.brand-bug img');
   const featureImgs = document.querySelectorAll('.feature-img');
   const form = document.getElementById('signup');
 
@@ -198,7 +202,7 @@ function initAnimations() {
   });
 
   // Set initial states for elements that need to be animated
-  if (logo) gsap.set(logo, { opacity: 0, y: 20 });
+  if (logo) gsap.set(logo, { opacity: 0, y: 8 });
   if (featureImgs.length) gsap.set(featureImgs, { opacity: 0, y: 30 });
   if (form) gsap.set(form, { opacity: 0, y: 20 });
 
@@ -224,19 +228,30 @@ function initAnimations() {
       filter: 'blur(6px)',
       rotateZ: () => gsap.utils.random(-8, 8),
       duration: 0.6,
-      stagger: { each: 0.02, from: 'random' },
       ease: 'back.out(1.8)'
     }, '-=0.3');
   }
 
-  // Logo pop-in
-  if (logo) {
-    tl.to(logo, {
-      y: 0,
-      opacity: 1,
+  // Gym description text animation
+  const gymDescription = document.querySelector('.gym-description');
+  if (gymDescription) {
+    tl.from(gymDescription, {
+      y: 30,
+      opacity: 0,
+      filter: 'blur(4px)',
       duration: 0.8,
       ease: 'power2.out'
-    }, '-=0.3');
+    }, '-=0.4');
+  }
+
+  // Brand bug: subtle fade-up (no spin)
+  if (logo) {
+    tl.to(logo, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: 'power2.out'
+    }, '-=0.2');
   }
 
   // Feature images staggered float-in
@@ -258,6 +273,19 @@ function initAnimations() {
       duration: 0.6,
       ease: 'power2.out'
     }, '-=0.3');
+  }
+
+  // (No continuous spin for brand bug to avoid distraction)
+
+  // Add subtle floating animation to gym description
+  if (gymDescription) {
+    tl.to(gymDescription, {
+      y: -5,
+      duration: 3,
+      ease: 'power1.inOut',
+      repeat: -1,
+      yoyo: true
+    }, '+=0.2');
   }
 }
 

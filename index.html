@@ -5,7 +5,15 @@
 <title>Kora</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<!-- Copernicus Font -->
+<link href="https://fonts.googleapis.com/css2?family=Copernicus:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Fraunces (Display) -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<!-- StyreneB Font -->
+<link href="https://fonts.googleapis.com/css2?family=StyreneB:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- HelveticaNow Font -->
+<link href="https://fonts.googleapis.com/css2?family=Helvetica+Now:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <!-- External CSS -->
 <link rel="stylesheet" href="styles.css">
 <!-- International Telephone Input CSS -->
@@ -19,63 +27,70 @@
 <section class="hero" id="hero">
   <!-- Blur overlay on background image -->
   <div class="overlay"></div>
+  <!-- Brand bug (top-left) -->
+  <a class="brand-bug" href="#" aria-label="Kora Home">
+    <img src="imgs/icon-only-logo.png" alt="Kora brand" />
+  </a>
   
   <!-- ===== MAIN CONTENT PANEL ===== -->
   <!-- Central panel containing all content -->
   <div class="panel" id="panel">
-    <div class="logo-container">
-      <img src='imgs/logo.png' alt="Kora Logo">
-    </div>
-
-
-     <!-- Large headline with each word on separate line -->
-     <h1 class="headline" id="headline">
-       <span>BE THE FIRST TO EXPERIENCE KORA</span>
-     </h1>
-     
-     <!-- ===== FEATURE IMAGES ===== -->
-     <!-- Two feature images below the headline -->
-     <div class="feature-images">
-       <img src="imgs/IMG_9058.PNG" alt="Kora Feature Image 1" class="feature-img">
-       <img src="imgs/IMG_8786.PNG" alt="Kora Feature Image 2" class="feature-img">
-     </div>
-     
-     <!-- ===== SIGNUP FORM ===== -->
-     <!-- Main signup form for collecting user information -->
-     <form class="signup" id="signup">
-      <p class="subcopy">Join our waitlist for news, launch updates, and a first look at Kora; a new kind of gym focused on holistic health, movement, and community!</p>
-       <!-- Name input field -->
-       <label>Name</label>
-       <input type="text" placeholder="Full Name">
-       
-       <!-- Email input field -->
-       <label>Email</label>
-       <input type="email" placeholder="example@mail.com">
-       
-       <!-- Phone number section with country code -->
-       <label>Phone number</label>
-       <div class="phone-input-container">
-          <!-- Phone number input with auto country detection -->
-          <input type="tel" id="phone" placeholder="Enter phone number">
+     <!-- ===== SIGNUP & COPY GRID ===== -->
+     <div class="content-row">
+       <!-- Left: Headline + Subhead -->
+       <div>
+         <h1 class="headline" id="headline">
+           <span>The Kora Experience</span>
+         </h1>
+         <p class="gym-description lead">
+           A revolutionary fitness space where cutting-edge equipment meets personalized training,
+           community connection, and holistic wellness. More than just a gym – it's your journey
+           to becoming the strongest version of yourself.
+         </p>
        </div>
-       
-       <!-- Newsletter subscription checkbox -->
-       <div style="display:flex;align-items:center;gap:0.5rem;margin-block:1rem 1.5rem;font-size:0.8rem;">
-           <input type="checkbox" id="sub">
-           <label for="sub">Subscribe to Newsletter</label>
-        </div>
-        
-        <!-- Newsletter description text -->
-        <div style="font-size:0.8rem;margin-bottom:1.5rem;">
-           Yes, send me updates and exclusive offers!
-        </div>
-        
-        <!-- Submit button -->
-        <button type="submit">Sign Up</button>
-     </form>
-  </div>
+
+       <!-- Right: Sign-up Card -->
+       <form class="signup card" id="signup">
+          <div class="field">
+            <label for="name">Full name</label>
+            <input id="name" type="text" placeholder="e.g. Jordan Rivera">
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="name@email.com">
+          </div>
+
+          <div class="field">
+            <label for="phone">Phone number</label>
+            <div class="phone-input-container">
+               <input type="tel" id="phone" placeholder="Enter phone number">
+            </div>
+          </div>
+
+          <div style="display:flex; gap: 10px; align-items: flex-start; margin: 6px 0 18px 0;">
+            <input type="checkbox" id="sub" style="transform: translateY(2px); width: 18px; height: 18px;">
+            <div>
+              <label for="sub" style="margin-bottom:6px;">Subscribe to newsletter</label>
+              <div style="opacity:.75; font-size: 0.92rem; line-height:1.4;">Occasional updates about openings, events, and offers.</div>
+            </div>
+          </div>
+
+          <button type="submit" aria-label="Join the waitlist">Join the Waitlist</button>
+       </form>
+     </div>
+   </div>
 
 </section>
+
+<!-- ===== INSTAGRAM LINK ===== -->
+<div class="instagram-link">
+  <a href="https://www.instagram.com/lifeatkora/?utm_source=ig_web_button_share_sheet" target="_blank" rel="noopener noreferrer">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+    </svg>
+  </a>
+</div>
 
 <!-- ===== GSAP ANIMATION LIBRARY ===== -->
 <!-- Load GSAP for smooth animations -->

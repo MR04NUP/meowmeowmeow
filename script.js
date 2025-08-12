@@ -19,7 +19,7 @@ if (typeof intlTelInput !== 'undefined' && phoneElement) {
 }
 
 // Form validation and button state management
-const signupForm = document.getElementById('signup');
+const signupForm = document.getElementById('signup-form');
 const submitButton = signupForm ? signupForm.querySelector('button[type="submit"]') : null;
 const nameInput = signupForm ? signupForm.querySelector('input[type="text"]') : null;
 const emailInput = signupForm ? signupForm.querySelector('input[type="email"]') : null;
@@ -99,6 +99,18 @@ function showValidationTooltip() {
     const tooltip = document.createElement('div');
     tooltip.className = 'validation-tooltip';
     tooltip.innerHTML = errors.join('<br>');
+    
+    // Add event listeners to the tooltip itself
+    tooltip.addEventListener('mouseenter', function() {
+      // Keep tooltip visible when hovering over it
+      clearTimeout(tooltip.hideTimeout);
+    });
+    
+    tooltip.addEventListener('mouseleave', function() {
+      // Hide tooltip when mouse leaves the tooltip
+      hideValidationTooltip();
+    });
+    
     submitButton.appendChild(tooltip);
   }
 }
@@ -106,12 +118,15 @@ function showValidationTooltip() {
 function hideValidationTooltip() {
   const tooltip = submitButton.querySelector('.validation-tooltip');
   if (tooltip) {
-    tooltip.classList.add('fade-out');
-    setTimeout(() => {
-      if (tooltip.parentNode) {
-        tooltip.remove();
-      }
-    }, 200); // Match the CSS animation duration
+    // Use a timeout to allow moving between button and tooltip
+    tooltip.hideTimeout = setTimeout(() => {
+      tooltip.classList.add('fade-out');
+      setTimeout(() => {
+        if (tooltip.parentNode) {
+          tooltip.remove();
+        }
+      }, 200); // Match the CSS animation duration
+    }, 100); // Small delay to allow moving between button and tooltip
   }
 }
 
@@ -190,21 +205,18 @@ function initAnimations() {
   if (typeof gsap === 'undefined') return;
 
   const panel = document.getElementById('panel');
-  const logo = null; // brand bug removed
   const introLogo = document.querySelector('.intro-logo');
   const introWordmark = document.querySelector('.intro-wordmark');
   const featureImgs = document.querySelectorAll('.feature-img');
-  const form = document.getElementById('signup');
-  console.log('Form element:', form);
+  const signupForm = document.getElementById('signup-form');
 
   // Set initial states for elements that need to be animated
-  // brand bug removed
   if (introLogo) gsap.set(introLogo, { opacity: 0, scale: 0.6, rotate: 0 });
   if (introWordmark) gsap.set(introWordmark, { opacity: 0 });
   if (featureImgs.length) gsap.set(featureImgs, { opacity: 0, y: 30 });
   // Do not set initial form state via JS; CSS handles it to prevent flash
 
-  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
   // Main panel sweep-in from bottom (bottom anchored) using clip-path reveal
   if (panel) {
@@ -259,9 +271,9 @@ function initAnimations() {
     })
     .to(introWordmark, {
       opacity: 1,
-      duration: 0.7,
+      duration: 0.6,
       ease: 'power2.out'
-    }, '-=0.2');
+    }, '-=0.4');
     // keep on screen: remove fade-out of logo and wordmark
   }
 
@@ -277,41 +289,15 @@ function initAnimations() {
   }
 
   // Form elements stagger-in - animate after panel animation
-  if (form) {
-    console.log('Form found, animating...');
-    tl.fromTo(form,
-      { opacity: 0, y: 24, scale: 0.98 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'power2.out',
-        onStart: () => console.log('Form animation started'),
-        onComplete: () => console.log('Form animation completed')
-      },
-      '+=0.6' // start after other key elements settle
-    );
-  } else {
-    console.log('Form not found!');
+  if (signupForm) {
+      tl.to(signupForm, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power2.out'
+      }, '-=0.4');
   }
-
-  // Brand bug: subtle fade-up after intro
-  // brand bug removed
-
 }
 
-// Wait for DOM and images to load before starting animations
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(initAnimations, 200); // Small delay to ensure images are registered
-  });
-} else {
-  setTimeout(initAnimations, 200);
-}
-
-// Fallback: ensure elements are visible after 3 seconds if animations don't work
-setTimeout(() => {
-  const logo = document.querySelector('.logo-container img');
-  const featureImgs = document.querySelectorAll('.feature-img');
-  const form = document.getElementById('signup');
-  
-  if (logo) gsap.set(logo, { opacity: 1, y: 0 });
-  if (featureImgs.length) gsap.set(featureImgs, { opacity: 1, y: 0 });
-  if (form) gsap.set(form, { opacity: 1, y: 0 });
-}, 3000);
+initAnimations();

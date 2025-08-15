@@ -62,12 +62,11 @@ body{
 /* Full-screen hero section with background image */
 .hero{
   width:100%;
-  min-height:100vh; /* Minimum viewport height, can grow if needed */
   background:url('imgs/background.jpg') center/cover no-repeat; /* Background image */
   background-color: #333; /* Fallback color if image fails to load */
   position:relative;
   overflow:visible; /* Allow content to overflow for scrolling */
-  padding-block: clamp(160px, 14vw, 200px); /* move everything further down */
+  padding-block: clamp(20px, 1.75vw, 25px); /* move everything further down */
 }
 
 /* Blur overlay on top of the background image */
@@ -90,29 +89,29 @@ body{
   padding-inline: clamp(24px, 4vw, 32px);
 }
 
-/* Intro animation logo container (center-top) */
+/*
 .intro-logos{
   position: absolute;
-  top: clamp(8px, 4vh, 48px); /* move logo slightly higher */
+  top: clamp(8px, 4vh, 48px); 
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(12px, 1.5vw, 24px); /* more spacing between icon and wordmark */
+  gap: clamp(12px, 1.5vw, 24px); 
   pointer-events: none;
   z-index: 40;
 }
 .intro-logo{
-  width: clamp(44px, 5.5vw, 80px); /* even smaller icon */
+  width: clamp(44px, 5.5vw, 80px); 
   height: auto;
   opacity: 0;
 }
 .intro-wordmark{
-  width: clamp(96px, 11vw, 180px); /* even smaller wordmark */
+  width: clamp(96px, 11vw, 180px); 
   height: auto;
   opacity: 0;
-}
+} */
 
 /* Two-column hero: left copy, right card */
 .content-row{
@@ -224,10 +223,10 @@ body{
 .gym-description {
   font-size: var(--subhead-size);
   line-height: 1.55;
-  font-weight: 450;
+  font-weight: 400;
   color: rgba(255,255,255,0.9); /* soft white */
   text-align: left;
-  max-width: 30ch;
+  max-width: 100ch;
   margin: 0 0 clamp(24px, 3vw, 32px) 0;
 }
 
@@ -598,7 +597,7 @@ body{
   max-width: var(--container-max);
   margin: 0 auto;
 }
-.container.small{ max-width: 820px; }
+.container.small { max-width: 700px; }
 .section-title{
   font-family: 'Fraunces', serif;
   font-weight: 600;
@@ -678,7 +677,7 @@ body{
 @media (max-width: 768px) {
   .panel { padding-inline: 20px; }
   .content-row{ display:block; }
-  .headline, .gym-description{ text-align: left; max-width: 65ch; }
+  .headline, .gym-description{ text-align: left; max-width: 80ch; }
   .signup{ width: 100%; margin-top: 28px; }
   .benefits{ grid-template-columns: 1fr; }
   .site-nav .nav-inner{ padding: 8px 12px; }

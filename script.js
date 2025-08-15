@@ -223,9 +223,9 @@ function initAnimations() {
     tl.from(panel, {
       clipPath: 'inset(100% 0% 0% 0%)',
       opacity: 0,
-      filter: 'blur(12px)',
-      duration: 1.0,
-      ease: 'power4.out'
+      filter: 'blur(8px)',
+      duration: 0.8,
+      ease: 'power3.out'
     });
   }
 
@@ -233,48 +233,40 @@ function initAnimations() {
   const chars = splitHeadlineIntoSpans();
   if (chars.length) {
     tl.from(chars, {
-      yPercent: 120,
+      yPercent: 30,
       opacity: 0,
-      filter: 'blur(6px)',
-      rotateZ: () => gsap.utils.random(-8, 8),
+      filter: 'blur(4px)',
       duration: 0.6,
-      ease: 'back.out(1.8)'
-    }, '-=0.3');
+      stagger: 0.015,
+      ease: 'power2.out'
+    }, '-=0.2');
   }
 
   // Gym description text animation
   const gymDescription = document.querySelector('.gym-description');
   if (gymDescription) {
     tl.from(gymDescription, {
-      y: 30,
+      y: 20,
       opacity: 0,
-      filter: 'blur(6px)',
-      duration: 0.8,
+      filter: 'blur(4px)',
+      duration: 0.6,
       ease: 'power2.out'
-    }, '-=0.4');
+    }, '-=0.3');
   }
 
-  // Intro: fast spin and enlarge for icon at center-top, then fade wordmark
+  // Intro: calm fade for icon and wordmark
   if (introLogo) {
     tl.to(introLogo, {
       opacity: 1,
-      scale: 1.25,
-      rotate: 360, // even fewer spins
-      duration: 0.9,
-      ease: 'power3.out'
-    }, '-=0.2')
-    .to(introLogo, {
       scale: 1,
-      rotate: 450,
-      duration: 0.4,
-      ease: 'back.out(1.4)'
-    })
+      duration: 0.6,
+      ease: 'power2.out'
+    }, '-=0.2')
     .to(introWordmark, {
       opacity: 1,
       duration: 0.6,
       ease: 'power2.out'
     }, '-=0.4');
-    // keep on screen: remove fade-out of logo and wordmark
   }
 
   // Feature images staggered float-in
@@ -293,11 +285,40 @@ function initAnimations() {
       tl.to(signupForm, {
         y: 0,
         opacity: 1,
-        duration: 0.8,
-        stagger: 0.2,
+        duration: 0.6,
         ease: 'power2.out'
-      }, '-=0.4');
+      }, '-=0.3');
   }
 }
 
 initAnimations();
+
+// === Scroll reveal for sections ===
+function initScrollReveal(){
+  const elements = document.querySelectorAll('.reveal-on-scroll');
+  if (!('IntersectionObserver' in window) || elements.length === 0) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  elements.forEach(el => observer.observe(el));
+}
+document.addEventListener('DOMContentLoaded', initScrollReveal);
+
+// === Gentle parallax on hero background ===
+function initParallax(){
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+  let lastY = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    const delta = (y - lastY) * 0.05;
+    lastY = y;
+    hero.style.backgroundPosition = `center calc(50% + ${y * 0.08}px)`;
+  }, { passive: true });
+}
+document.addEventListener('DOMContentLoaded', initParallax);

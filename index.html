@@ -21,6 +21,18 @@
 </head>
 <body>
 
+  <!-- Sticky navigation with subtle wordmark -->
+  <header class="site-nav" role="banner">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo" aria-label="Kora Home">
+        <img src="imgs/workmark-only-logo.png" alt="Kora wordmark" />
+      </a>
+      <nav class="nav-actions" aria-label="Primary">
+        <a href="#signup" class="btn-outline">Join waitlist</a>
+      </nav>
+    </div>
+  </header>
+
 
 <!-- ===== HERO SECTION ===== -->
 <!-- Full-screen hero section with background image -->
@@ -52,7 +64,9 @@
        </div>
 
        <!-- Right: Sign-up Card -->
-       <form class="signup card" id="signup-form">
+       <div id="signup" class="anchor"></div>
+       <form class="signup card" id="signup-form" aria-labelledby="headline">
+          <div class="social-proof" aria-live="polite">Join over <strong>200</strong> early members waiting for Kora.</div>
           <div class="field">
             <label for="name">Full name</label>
             <input id="name" type="text" placeholder="e.g. Jordan Rivera">
@@ -79,10 +93,66 @@
           </div>
 
           <button type="submit" aria-label="Join the waitlist">Join the Waitlist</button>
+          <p class="form-microcopy" id="form-microcopy">No spam — only occasional updates about opening dates and events.</p>
        </form>
      </div>
    </div>
 
+</section>
+
+<!-- Heritage divider -->
+<div class="heritage-divider" aria-hidden="true"></div>
+
+<!-- ===== STORY SECTION ===== -->
+<section class="section story reveal-on-scroll" id="story" aria-label="Our Story">
+  <div class="container">
+    <h2 class="section-title">Born in Nepal. Guided by the Himalayas.</h2>
+    <p class="section-lead">
+      Kora is a modern sanctuary inspired by Himalayan principles of balance and inner strength. We bring movement,
+      recovery, and community together so you can grow in mind, body, and spirit—at a grounded, sustainable pace.
+    </p>
+  </div>
+  <div class="heritage-bg" aria-hidden="true"></div>
+  <div class="section-gradient" aria-hidden="true"></div>
+  <div class="container small">
+    <p class="fine-print">Our name comes from the Tibetan practice of circumambulation—a mindful journey taken with purpose.</p>
+  </div>
+</section>
+
+<!-- ===== OFFER SECTION ===== -->
+<section class="section offer reveal-on-scroll" id="offer" aria-label="What We Offer">
+  <div class="container">
+    <h2 class="section-title">What you get</h2>
+    <div class="benefits">
+      <div class="benefit-card">
+        <h3>Movement</h3>
+        <p>Strength and mobility sessions designed to align body and breath—no noise, no rush.</p>
+      </div>
+      <div class="benefit-card">
+        <h3>Recovery</h3>
+        <p>Guided recovery, heat/cold exposure, and breathwork to restore balance and resilience.</p>
+      </div>
+      <div class="benefit-card">
+        <h3>Growth</h3>
+        <p>Workshops and community events that nurture mind, body, and spirit together.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Heritage divider -->
+<div class="heritage-divider" aria-hidden="true"></div>
+
+<!-- ===== CTA SECTION ===== -->
+<section class="section cta reveal-on-scroll" id="join" aria-label="Join the Waitlist">
+  <div class="container">
+    <h2 class="section-title">Be first to experience Kora</h2>
+    <p class="section-lead">We’ll share opening dates, early events, and membership updates.</p>
+    <div class="cta-actions">
+      <a href="#signup" class="btn-primary" aria-label="Jump to waitlist form">Join the waitlist</a>
+      <span class="cta-note">No spam. Unsubscribe anytime.</span>
+    </div>
+  </div>
 </section>
 
 <!-- ===== INSTAGRAM LINK ===== -->

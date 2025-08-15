@@ -39,6 +39,14 @@
   --radius: 16px;
 }
 
+/* Additional brand tokens */
+:root{
+  --accent: #1f3a5f; /* deep blue */
+  --accent-2: #3f5e4b; /* moss green */
+  --gold: #c2a56b; /* muted gold */
+  --paper: #F8F3EA; /* soft off-white */
+}
+
 /* Base body styles with HelveticaNow font and dark background */
 body{
   font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
@@ -54,12 +62,11 @@ body{
 /* Full-screen hero section with background image */
 .hero{
   width:100%;
-  min-height:100vh; /* Minimum viewport height, can grow if needed */
   background:url('imgs/background.jpg') center/cover no-repeat; /* Background image */
   background-color: #333; /* Fallback color if image fails to load */
   position:relative;
   overflow:visible; /* Allow content to overflow for scrolling */
-  padding-block: clamp(160px, 14vw, 200px); /* move everything further down */
+  padding-block: clamp(20px, 1.75vw, 25px); /* move everything further down */
 }
 
 /* Blur overlay on top of the background image */
@@ -67,6 +74,7 @@ body{
   position:absolute;
   inset:0; /* Cover entire hero section */
   backdrop-filter:blur(5px); /* Blur effect for depth */
+  background: linear-gradient(to bottom, rgba(10,10,10,0.35), rgba(10,10,10,0.25));
 }
 
 /* ===== MAIN CONTENT PANEL STYLES ===== */
@@ -81,29 +89,29 @@ body{
   padding-inline: clamp(24px, 4vw, 32px);
 }
 
-/* Intro animation logo container (center-top) */
+/*
 .intro-logos{
   position: absolute;
-  top: clamp(8px, 4vh, 48px); /* move logo slightly higher */
+  top: clamp(8px, 4vh, 48px); 
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(12px, 1.5vw, 24px); /* more spacing between icon and wordmark */
+  gap: clamp(12px, 1.5vw, 24px); 
   pointer-events: none;
   z-index: 40;
 }
 .intro-logo{
-  width: clamp(44px, 5.5vw, 80px); /* even smaller icon */
+  width: clamp(44px, 5.5vw, 80px); 
   height: auto;
   opacity: 0;
 }
 .intro-wordmark{
-  width: clamp(96px, 11vw, 180px); /* even smaller wordmark */
+  width: clamp(96px, 11vw, 180px); 
   height: auto;
   opacity: 0;
-}
+} */
 
 /* Two-column hero: left copy, right card */
 .content-row{
@@ -112,6 +120,51 @@ body{
   align-items: start;
   margin-top: 100px;
 }
+
+/* ===== Sticky Nav ===== */
+.site-nav{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(246, 239, 230, 0.6);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.site-nav .nav-inner{
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.site-nav .nav-logo img{
+  height: 26px;
+  width: auto;
+  display: block;
+}
+.btn-outline{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  border: 1px solid rgba(31,58,95,0.35);
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+.btn-outline:hover{ background: rgba(31,58,95,0.08); transform: translateY(-1px); }
+.btn-outline:active{ transform: translateY(0); }
+
+/* Anchor offset for fixed nav */
+.anchor{ position: relative; top: -80px; visibility: hidden; }
 
 /* Row: icon logo on the left, signup panel on the right */
 /* Brand bug in nav (top-left), smaller and subtle */
@@ -170,10 +223,10 @@ body{
 .gym-description {
   font-size: var(--subhead-size);
   line-height: 1.55;
-  font-weight: 450;
+  font-weight: 400;
   color: rgba(255,255,255,0.9); /* soft white */
   text-align: left;
-  max-width: 30ch;
+  max-width: 100ch;
   margin: 0 0 clamp(24px, 3vw, 32px) 0;
 }
 
@@ -190,6 +243,17 @@ body{
   z-index: 10;
   opacity: 0;
   transform: translateY(24px) scale(0.98);
+}
+
+.signup .social-proof{
+  font-size: 0.9rem;
+  color: rgba(0,0,0,0.7);
+  margin-bottom: 14px;
+}
+.signup .form-microcopy{
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: rgba(0,0,0,0.6);
 }
 
 /* ===== FORM INPUT STYLES ===== */
@@ -523,6 +587,87 @@ body{
   visibility:hidden; /* Hidden but still takes up space */
 }
 
+/* ===== Sections (Story / Offer / CTA) ===== */
+.section{
+  position: relative;
+  background: var(--paper);
+  padding: clamp(56px, 10vw, 100px) 16px;
+}
+.container{
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.container.small { max-width: 700px; }
+.section-title{
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #1C1B1A;
+  font-size: clamp(28px, 4.5vw, 42px);
+  margin-bottom: 12px;
+}
+.section-lead{
+  font-size: clamp(16px, 2.2vw, 19px);
+  line-height: 1.65;
+  color: #3c3a37;
+  max-width: 70ch;
+}
+.fine-print{
+  margin-top: 22px;
+  color: #5b564f;
+  font-size: 0.95rem;
+}
+.benefits{
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.benefit-card{
+  background: #F4EEE3;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 16px;
+  padding: 18px;
+}
+.benefit-card h3{ font-size: 1.15rem; margin-bottom: 8px; color: #1f3a2a; }
+.benefit-card p{ color: #423f3a; line-height: 1.6; }
+
+.cta .cta-actions{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+}
+.btn-primary{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+.btn-primary:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+.cta-note{ color: #5c5a55; font-size: 0.95rem; }
+
+/* Heritage divider */
+.heritage-divider{
+  height: 28px;
+  background-image: linear-gradient(to right, rgba(0,0,0,0.06) 20%, rgba(0,0,0,0) 0%), linear-gradient(to right, rgba(0,0,0,0.06) 20%, rgba(0,0,0,0) 0%);
+  background-size: 12px 1px, 12px 1px;
+  background-repeat: repeat-x;
+  background-position: 0 50%, 0 60%;
+  opacity: 0.45;
+}
+
+/* Subtle scroll reveal baseline */
+.reveal-on-scroll{ opacity: 0; transform: translateY(16px); }
+.reveal-on-scroll.is-visible{ opacity: 1; transform: translateY(0); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+
 /* ===== RESPONSIVE DESIGN ===== */
 /* Media queries for smaller screens */
 @media (max-width: 1024px){
@@ -532,8 +677,10 @@ body{
 @media (max-width: 768px) {
   .panel { padding-inline: 20px; }
   .content-row{ display:block; }
-  .headline, .gym-description{ text-align: left; max-width: 65ch; }
+  .headline, .gym-description{ text-align: left; max-width: 80ch; }
   .signup{ width: 100%; margin-top: 28px; }
+  .benefits{ grid-template-columns: 1fr; }
+  .site-nav .nav-inner{ padding: 8px 12px; }
 }
 
 @media (max-width: 480px) {
